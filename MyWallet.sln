@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3AF02A81-7A01-4481-8052-04801814E4FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Domain", "4 - Domain", "{01AD2CEE-A1BE-481D-8FED-2CB8AF66AB9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWallet.Domain", "src\MyWallet.Domain\MyWallet.Domain.csproj", "{F38EA7E6-CF60-41D5-9170-4A95B5430993}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F38EA7E6-CF60-41D5-9170-4A95B5430993}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F38EA7E6-CF60-41D5-9170-4A95B5430993}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F38EA7E6-CF60-41D5-9170-4A95B5430993}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F38EA7E6-CF60-41D5-9170-4A95B5430993}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{01AD2CEE-A1BE-481D-8FED-2CB8AF66AB9F} = {3AF02A81-7A01-4481-8052-04801814E4FD}
+		{F38EA7E6-CF60-41D5-9170-4A95B5430993} = {01AD2CEE-A1BE-481D-8FED-2CB8AF66AB9F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB8A0FA4-CBA0-4883-9F74-4D8AA9B16A1A}
+	EndGlobalSection
+EndGlobal
