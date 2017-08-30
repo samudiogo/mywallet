@@ -1,9 +1,15 @@
 ﻿using System;
+using static System.Guid;
 
 namespace MyWallet.Domain.Models.Core
 {
-    public abstract class Entity:IEquatable<Entity>
+    public abstract class Entity : IEquatable<Entity>
     {
+        protected Entity() { }
+        protected Entity(Guid id)
+        {
+            Id = id.Equals(Empty) ? NewGuid() : id;
+        }
         public Guid Id { get; protected set; }
 
         public bool Equals(Entity other)
@@ -19,7 +25,7 @@ namespace MyWallet.Domain.Models.Core
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
 
-            return Equals((Entity) obj);
+            return Equals((Entity)obj);
         }
 
         public override int GetHashCode()
