@@ -101,5 +101,16 @@ namespace MyWallet.Domain.Tests
             //Assert:
             Assert.IsFalse(result);
         }
+
+        [TestMethod]
+        public void Id_Cannot_to_be_EmptyGuid()
+        {
+            //arrange
+            var sut = _fakeCard;
+            //act:
+            var result = sut.Id;
+            //assert:
+            Assert.AreNotEqual(Guid.Empty, result);
+        }
     }
 }
