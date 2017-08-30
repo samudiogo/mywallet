@@ -7,18 +7,19 @@ using Convert = System.Convert;
 
 namespace MyWallet.Domain.Models
 {
-    public class Card: Entity
+    public class Card : Entity
     {
         public Card(Guid id, string number, DateTime dueDate, DateTime expirationDate, string cvv, decimal limit, bool isReleasingCreditAccepted)
+            : base(id)
         {
-            Id = id;
-            if(string.IsNullOrEmpty(number) || ! Regex.IsMatch(number,"")) throw new Exception("Invalid credit card number.");
+            
+            if (string.IsNullOrEmpty(number) || !Regex.IsMatch(number, "")) throw new Exception("Invalid credit card number.");
 
             Number = HashingCardNumber(number);
             DueDate = dueDate;
             ExpirationDate = expirationDate;
 
-            if ( string.IsNullOrEmpty(cvv) || !Regex.IsMatch(cvv, @"^[0-9]{3,4}$")) throw new Exception("the cvv code should have three or four digits.");
+            if (string.IsNullOrEmpty(cvv) || !Regex.IsMatch(cvv, @"^[0-9]{3,4}$")) throw new Exception("the cvv code should have three or four digits.");
             Cvv = cvv;
 
             if (limit < 0) throw new Exception("The limit cannot be negative.");
@@ -29,7 +30,7 @@ namespace MyWallet.Domain.Models
         /// <summary>
         /// used only to EF
         /// </summary>
-        protected Card(){}
+        protected Card() { }
         /// <summary>
         /// Credit Card number
         /// </summary>
@@ -89,20 +90,20 @@ namespace MyWallet.Domain.Models
         /// verifiy the status of ExpiredDate
         /// </summary>
         /// <returns>returns true if this card are expired</returns>
-        public bool IsExpiredCard() => ExpirationDate.Date >= DateTime.Today;
+        public bool IsExpiredCard() => ExpirationDate.Date <= DateTime.Today;
 
         /// <summary>
         /// To avoid security leak of credit card number, this method encrypt the card number as hasg sha512 
         /// </summary>
         /// <param name="cardNumber"></param>
         /// <returns>hashed string of credit card number</returns>
-        private static string HashingCardNumber( string cardNumber)
+        private static string HashingCardNumber(string cardNumber)
         {
             using (var sha = SHA512.Create())
                 return Convert.ToBase64String(sha.ComputeHash(UTF8.GetBytes(cardNumber)));
         }
-        
 
-    
+
+
     }
 }
