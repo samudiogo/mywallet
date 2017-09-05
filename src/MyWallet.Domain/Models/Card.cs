@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using MyWallet.Domain.Models.Core;
@@ -51,6 +52,10 @@ namespace MyWallet.Domain.Models
         /// max value avaliable for uses
         /// </summary>
         public decimal Limit { get; }
+
+        public ICollection<Purchase> Purchases { get;} = new List<Purchase>();
+
+        public void RegisterPurchase(Purchase purchase) => Purchases.Add(purchase);
 
         /// <summary>
         /// indicates if this card accept to pay before the due date 
