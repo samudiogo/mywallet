@@ -26,7 +26,7 @@ namespace MyWallet.Domain.Models
             if (limit < 0) throw new Exception("The limit cannot be negative.");
             Limit = limit;
 
-            _isReleasingCreditAccepted = isReleasingCreditAccepted;
+            IsReleasingCreditAccepted = isReleasingCreditAccepted;
         }
         /// <summary>
         /// used only to EF
@@ -52,6 +52,8 @@ namespace MyWallet.Domain.Models
         /// max value avaliable for uses
         /// </summary>
         public decimal Limit { get; private set; }
+        
+        public bool IsReleasingCreditAccepted { get; }
 
         public ICollection<Acquisition> Purchases { get;} = new List<Acquisition>();
 
@@ -63,21 +65,7 @@ namespace MyWallet.Domain.Models
             Limit = newLimit;
 
         }
-
-        /// <summary>
-        /// indicates if this card accept to pay before the due date 
-        /// </summary>
-        private readonly bool _isReleasingCreditAccepted;
-
-        /// <summary>
-        /// returns if this card accept to pay before the due date 
-        /// </summary>
-        /// <returns>true if accepts</returns>
-        public bool IsReleasingCreditAccepted()
-        {
-            return _isReleasingCreditAccepted;
-        }
-
+        
         /// <summary>
         /// Check if the full value of the purchase can be make using this card 
         /// </summary>
