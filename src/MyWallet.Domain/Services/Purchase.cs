@@ -36,6 +36,8 @@ namespace MyWallet.Domain.Services
                     DecreaseLimit(card, remainPurchaseAmount);
                     break;
                 }
+                if (card.Limit == 0) continue;
+
                 remainPurchaseAmount -= card.Limit;
                 var partialPurchase = new Acquisition(acquisition.Id, acquisition.Description, card.Limit);
                 card.RegisterPurchase(partialPurchase);
