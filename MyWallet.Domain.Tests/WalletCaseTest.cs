@@ -55,7 +55,7 @@ namespace MyWallet.Domain.Tests
             sut.AjustRealtLimit(250m);
             var initialRealLimit = sut.RealLimit; //should be 250m
 
-            sut.RemoveCardById(nubank.Id);
+            sut.RemoveCardByIdAndUpdateLimit(nubank.Id);
             var expectedZeroRealimit = sut.RealLimit; //should be 0m;
 
             sut.AddNewCard(visa);
@@ -64,7 +64,7 @@ namespace MyWallet.Domain.Tests
             var expected1500MaximumLimit = sut.GetMaximmumLimit();
 
             sut.AjustRealtLimit(1500m);
-            sut.RemoveCardById(american.Id);
+            sut.RemoveCardByIdAndUpdateLimit(american.Id);
 
             var expected500MaximumLimit = sut.RealLimit;
             sut.AjustRealtLimit(100m);

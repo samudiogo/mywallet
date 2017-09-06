@@ -54,57 +54,56 @@ namespace MyWallet.Domain.Models
 
         #region purchase
 
+        private IEnumerable<Card> GetIdealCardList()
+        {
+            return IsSameDueDateCardList() ? Cards.OrderBy(c => c.Limit) : Cards.OrderByDescending(c => c.DueDate).ThenBy(c => c.Limit);
+        }
+
+        private bool IsSameDueDateCardList()
+        {
+            var cardList = Cards.OrderByDescending(c => c.DueDate).ToList();
+            var isSameDueList = false;
+            for (var i = 0; i < cardList.Count - 1; i++)
+            {
+                var card = cardList[i];//need to improve with elementAt
+                var next = cardList[i + 1];
+                if (card != null && next != null && card.IsSameDueDate(next)) isSameDueList = true;
+                else isSameDueList = false;
+            }
+            return isSameDueList;
+        }
+
         public void Buy(Purchase purchase)
         {
             //check if amount is over the realimit
             if (purchase.Amount > RealLimit) throw new Exception("Amount over RealLimit");
 
-            //get cards lists orderning by last due date and minimum limit
-            var idealCardList = Cards.OrderByDescending(c => c.DueDate)
-                                 .ThenBy(c => c.Limit);
-            Card idealCard;
-            var cardsSameDue = new List<Card>();
-            if (idealCardList.Count() == 1)
-                idealCard = idealCardList.First();
-            else
-            {
+            if (!Cards.Any()) throw new Exception("No credit card was found in the wallet");
 
-                for (var i = 0; i < idealCardList.Count(); i++)
-                {
-                    var card = idealCardList.ElementAtOrDefault(i);
-                    var next = idealCardList.ElementAtOrDefault(i + 1);
-                    if ((card != null && next != null) && card.IsSameDueDate(next))
-                    {
-                        cardsSameDue.Add(card);
-                        cardsSameDue.Add(next);
-                    }
-                }
-                idealCard = cardsSameDue.OrderBy(c => c.Limit).First();
-            }
+            //get cards lists orderning by last due date and minimum limit
+            var idealCardList = GetIdealCardList().ToList();
+
+            var idealCard = idealCardList.First();
+
+
             if (idealCard.IsPurchaseFitsLimit(purchase.Amount))
                 idealCard.RegisterPurchase(purchase);
             else if (purchase.Amount <= GetMaximmumLimit())
             {
-                var firtstPortion = new Purchase(purchase.Description, purchase.Amount - idealCard.Limit);
-                idealCard.RegisterPurchase(firtstPortion);
+                var remainPurchaseAmount = purchase.Amount;
+                foreach (var card in idealCardList)
+                {
+                    if (!card.IsPurchaseFitsLimit(remainPurchaseAmount))
+                    {
+                        //remainPurchaseAmount = remainPurchaseAmount - card.Limit;
+                        remainPurchaseAmount -= card.Limit;
+                        card.RegisterPurchase(new Purchase(purchase.Description, card.Limit));
+                    }
+                    else
+                        card.RegisterPurchase(new Purchase(purchase.Description, remainPurchaseAmount));
 
-                var remainAmount = (int)(purchase.Amount - firtstPortion.Amount) / cardsSameDue.Count;
-
-                //if wallet have another same due card, te
-                var remainCards = cardsSameDue.Any() ?
-                    cardsSameDue.Where(c => c.Id != idealCard.Id) :
-                    idealCardList.Where(c => c.Id != idealCard.Id);
+                }
                 
-                var nextCard = remainCards
-                    .OrderByDescending(c => c.DueDate)//Assert the right order
-                    .ThenBy(c => c.Limit)// TODO: transform it on extension method
-                    .First();
-
-                if (nextCard.IsPurchaseFitsLimit(remainAmount))
-                    nextCard.RegisterPurchase(new Purchase(purchase.Description, remainAmount));
-                
-                //TODO: refact this method (turn it recursive)
-
             }
         }
 
