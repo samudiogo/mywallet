@@ -51,11 +51,18 @@ namespace MyWallet.Domain.Models
         /// <summary>
         /// max value avaliable for uses
         /// </summary>
-        public decimal Limit { get; }
+        public decimal Limit { get; private set; }
 
-        public ICollection<Purchase> Purchases { get;} = new List<Purchase>();
+        public ICollection<Acquisition> Purchases { get;} = new List<Acquisition>();
 
-        public void RegisterPurchase(Purchase purchase) => Purchases.Add(purchase);
+        public void RegisterPurchase(Acquisition purchase) => Purchases.Add(purchase);
+
+        public void UpdateLimit(decimal newLimit)
+        {
+            if(newLimit < 0) throw new Exception("Limit cannot to be negative");
+            Limit = newLimit;
+
+        }
 
         /// <summary>
         /// indicates if this card accept to pay before the due date 

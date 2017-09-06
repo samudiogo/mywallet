@@ -3,15 +3,15 @@ using MyWallet.Domain.Models.Core;
 
 namespace MyWallet.Domain.Models
 {
-    public class Purchase:Entity
+    public class Acquisition:Entity
     {
-        public Purchase(Guid id, string description, decimal amount):base(id)
+        public Acquisition(Guid id, string description, decimal amount):base(id)
         {
             Description = description;
             Amount = amount;
         }
 
-        protected Purchase() { }
+        protected Acquisition() { }
 
         public string Description { get; private set; }
         public decimal Amount { get; private set; }

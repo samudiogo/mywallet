@@ -54,7 +54,7 @@ namespace MyWallet.Domain.Models
 
         #region purchase
 
-        private IEnumerable<Card> GetIdealCardList()
+        protected internal IEnumerable<Card> GetSortedCardList()
         {
             return IsSameDueDateCardList() ? Cards.OrderBy(c => c.Limit) : Cards.OrderByDescending(c => c.DueDate).ThenBy(c => c.Limit);
         }
@@ -73,27 +73,7 @@ namespace MyWallet.Domain.Models
             return isSameDueList;
         }
 
-        public void Buy(Purchase purchase)
-        {
-            //check if amount is over the realimit
-            if (purchase.Amount > RealLimit || purchase.Amount > GetMaximmumLimit())
-                throw new Exception("Amount over RealLimit");
-
-            if (!Cards.Any()) throw new Exception("No credit card was found in the wallet");
-
-            //get cards lists orderning by last due date and minimum limit
-            var idealCardList = GetIdealCardList().ToList();
-
-            var remainPurchaseAmount = purchase.Amount;
-            foreach (var card in idealCardList)
-                if (card.IsPurchaseFitsLimit(remainPurchaseAmount))
-                    card.RegisterPurchase(new Purchase(purchase.Id, purchase.Description, remainPurchaseAmount));
-                else
-                {
-                    remainPurchaseAmount -= card.Limit;
-                    card.RegisterPurchase(new Purchase(purchase.Id, purchase.Description, card.Limit));
-                }
-        }
+        
 
         #endregion
 
