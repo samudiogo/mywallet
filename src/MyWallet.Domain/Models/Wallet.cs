@@ -76,35 +76,23 @@ namespace MyWallet.Domain.Models
         public void Buy(Purchase purchase)
         {
             //check if amount is over the realimit
-            if (purchase.Amount > RealLimit) throw new Exception("Amount over RealLimit");
+            if (purchase.Amount > RealLimit || purchase.Amount > GetMaximmumLimit())
+                throw new Exception("Amount over RealLimit");
 
             if (!Cards.Any()) throw new Exception("No credit card was found in the wallet");
 
             //get cards lists orderning by last due date and minimum limit
             var idealCardList = GetIdealCardList().ToList();
 
-            var idealCard = idealCardList.First();
-
-
-            if (idealCard.IsPurchaseFitsLimit(purchase.Amount))
-                idealCard.RegisterPurchase(purchase);
-            else if (purchase.Amount <= GetMaximmumLimit())
-            {
-                var remainPurchaseAmount = purchase.Amount;
-                foreach (var card in idealCardList)
+            var remainPurchaseAmount = purchase.Amount;
+            foreach (var card in idealCardList)
+                if (card.IsPurchaseFitsLimit(remainPurchaseAmount))
+                    card.RegisterPurchase(new Purchase(purchase.Id, purchase.Description, remainPurchaseAmount));
+                else
                 {
-                    if (!card.IsPurchaseFitsLimit(remainPurchaseAmount))
-                    {
-                        //remainPurchaseAmount = remainPurchaseAmount - card.Limit;
-                        remainPurchaseAmount -= card.Limit;
-                        card.RegisterPurchase(new Purchase(purchase.Description, card.Limit));
-                    }
-                    else
-                        card.RegisterPurchase(new Purchase(purchase.Description, remainPurchaseAmount));
-
+                    remainPurchaseAmount -= card.Limit;
+                    card.RegisterPurchase(new Purchase(purchase.Id, purchase.Description, card.Limit));
                 }
-                
-            }
         }
 
         #endregion

@@ -51,7 +51,7 @@ namespace MyWallet.Domain.Tests
         public void Successful_Big_Purchase_with_many_cards()
         {
             //Arrange:
-            var espressoMachine = new Purchase("Espresso Machine Walmart",799.99m);
+            var espressoMachine = new Purchase(Guid.Empty, "Espresso Machine Walmart",799.99m);
             
             var nubank = new Card(Guid.Empty, "123", new DateTime(2017, 10, 10),
                 new DateTime(), "123", 300m, true);

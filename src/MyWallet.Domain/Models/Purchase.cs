@@ -5,7 +5,7 @@ namespace MyWallet.Domain.Models
 {
     public class Purchase:Entity
     {
-        public Purchase( string description, decimal amount):base(Guid.NewGuid())
+        public Purchase(Guid id, string description, decimal amount):base(id)
         {
             Description = description;
             Amount = amount;
