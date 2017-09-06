@@ -72,9 +72,7 @@ namespace MyWallet.Domain.Models
             }
             return isSameDueList;
         }
-
         
-
         #endregion
 
 
