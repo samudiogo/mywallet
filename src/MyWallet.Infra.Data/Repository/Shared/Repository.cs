@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using MyWallet.Infra.Data.Context;
 using MyWallet.Infra.Data.Contracts;
 
@@ -40,5 +41,6 @@ namespace MyWallet.Infra.Data.Repository.Shared
         }
 
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate) => DbSet.AsNoTracking().Where(predicate);
+        
     }
 }

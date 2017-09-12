@@ -13,7 +13,7 @@ namespace MyWallet.Infra.Data.Mappings
 
             Property(w => w.RealLimit);
 
-            //HasRequired(w => w.Owner);
+            HasRequired(w => w.Owner);
 
             HasMany(c => c.Cards);
         }

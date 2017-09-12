@@ -11,7 +11,6 @@ namespace MyWallet.Infra.Data.Mappings
         {
             HasKey(a => a.Id);
             Property(a => a.Description)
-                .HasColumnType("nvarchar(100)")
                 .HasMaxLength(100)
                 .IsRequired();
 

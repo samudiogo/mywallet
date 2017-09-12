@@ -11,14 +11,12 @@ namespace MyWallet.Infra.Data.Mappings
             HasKey(c => c.Id);
 
             Property(c => c.Number)
-                .HasColumnType("nvarchar(20)")
                 .HasMaxLength(20)
                 .IsRequired();
 
             Property(c => c.DueDate).IsRequired();
             Property(c => c.ExpirationDate).IsRequired();
-            Property(c => c.Cvv).HasMaxLength(4);
-
+            Property(c => c.Cvv).HasMaxLength(4).IsRequired();
             Property(c => c.Limit).IsRequired()
                 .IsConcurrencyToken();
 

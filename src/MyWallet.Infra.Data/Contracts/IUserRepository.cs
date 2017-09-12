@@ -6,7 +6,7 @@ namespace MyWallet.Infra.Data.Contracts
 {
     public interface IUserRepository : IRepository<User>
     {
-        Task<User> FindByTokenIdAsync(string token, Guid id);
+        Task<User> FindByTokenAsync(string token);
         Task<User> FindByEmailAsync(string email);
     }
 }

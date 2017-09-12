@@ -35,25 +35,25 @@ namespace MyWallet.Domain.Models
         /// <summary>
         /// Credit Card number
         /// </summary>
-        public string Number { get; }
+        public string Number { get; private set; }
         /// <summary>
         /// Date limit to pay your bill
         /// </summary>
-        public DateTime DueDate { get; }
+        public DateTime DueDate { get; private set; }
         /// <summary>
         /// Date limit to use this card
         /// </summary>
-        public DateTime ExpirationDate { get; }
+        public DateTime ExpirationDate { get; private set; }
         /// <summary>
         /// Credit card code validation (behind the card)
         /// </summary>
-        public string Cvv { get; }
+        public string Cvv { get; private set; }
         /// <summary>
         /// max value avaliable for uses
         /// </summary>
         public decimal Limit { get; private set; }
         
-        public bool IsReleasingCreditAccepted { get; }
+        public bool IsReleasingCreditAccepted { get; private set; }
 
         public ICollection<Acquisition> Purchases { get;} = new List<Acquisition>();
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace MyWallet.Infra.Data.Contracts
 {
@@ -10,6 +11,6 @@ namespace MyWallet.Infra.Data.Contracts
         TEntity GetById(Guid id);
         void Update(TEntity obj);
         IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        
     }
-}
 }

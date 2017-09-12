@@ -13,7 +13,9 @@ namespace MyWallet.Infra.Data.Mappings
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(c => c.Email).IsRequired();
             Property(u => u.Name).IsRequired();
-            Property(u => u.Token);
+            Property(u => u.Password).IsRequired();
+            Property(u => u.Token).IsOptional();
+            
         }
     }
 }

@@ -57,9 +57,13 @@
     <Compile Include="Mappings\CardMap.cs" />
     <Compile Include="Mappings\UserMap.cs" />
     <Compile Include="Mappings\WalletMap.cs" />
-    <Compile Include="Migrations\201709101355218_Init.cs" />
-    <Compile Include="Migrations\201709101355218_Init.Designer.cs">
-      <DependentUpon>201709101355218_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201709120433465_Init.cs" />
+    <Compile Include="Migrations\201709120433465_Init.Designer.cs">
+      <DependentUpon>201709120433465_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709120458085_UserTokenOptional.cs" />
+    <Compile Include="Migrations\201709120458085_UserTokenOptional.Designer.cs">
+      <DependentUpon>201709120458085_UserTokenOptional.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,10 +84,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709101355218_Init.resx">
-      <DependentUpon>201709101355218_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709120433465_Init.resx">
+      <DependentUpon>201709120433465_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709120458085_UserTokenOptional.resx">
+      <DependentUpon>201709120458085_UserTokenOptional.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

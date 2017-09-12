@@ -12,7 +12,7 @@ namespace MyWallet.Infra.Data.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false),
-                        Description = c.String(),
+                        Description = c.String(nullable: false, maxLength: 100),
                         Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Card_Id = c.Guid(),
                     })
@@ -25,7 +25,12 @@ namespace MyWallet.Infra.Data.Migrations
                 c => new
                     {
                         Id = c.Guid(nullable: false),
+                        Number = c.String(nullable: false, maxLength: 20),
+                        DueDate = c.DateTime(nullable: false),
+                        ExpirationDate = c.DateTime(nullable: false),
+                        Cvv = c.String(nullable: false, maxLength: 4),
                         Limit = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        IsReleasingCreditAccepted = c.Boolean(nullable: false),
                         Wallet_Id = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
@@ -36,7 +41,11 @@ namespace MyWallet.Infra.Data.Migrations
                 "dbo.Users",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
+                        Name = c.String(nullable: false),
+                        Email = c.String(nullable: false),
+                        Password = c.String(nullable: false),
+                        Token = c.String(nullable: true),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -46,10 +55,10 @@ namespace MyWallet.Infra.Data.Migrations
                     {
                         Id = c.Guid(nullable: false),
                         RealLimit = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Owner_Id = c.Guid(),
+                        Owner_Id = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Users", t => t.Owner_Id)
+                .ForeignKey("dbo.Users", t => t.Owner_Id, cascadeDelete: true)
                 .Index(t => t.Owner_Id);
             
         }
