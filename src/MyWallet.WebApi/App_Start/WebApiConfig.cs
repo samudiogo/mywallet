@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
 
 namespace MyWallet.WebApi
 {
@@ -13,6 +10,12 @@ namespace MyWallet.WebApi
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+            //resolver for 404 error
+
+            //config.Routes.MapHttpRoute(
+            //    name: "ResourceNotFound",
+            //    routeTemplate: "{*uri}",
+            //    defaults: new { controller = "Default", id = RouteParameter.Optional });
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
