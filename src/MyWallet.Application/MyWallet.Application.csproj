@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppServices\UserAppService.cs" />
+    <Compile Include="AutoMapper\AutoMapperConfig.cs" />
+    <Compile Include="AutoMapper\AutoMapperProfile.cs" />
     <Compile Include="Contracts\IUserAppService.cs" />
     <Compile Include="Contracts\IWalletAppService.cs" />
     <Compile Include="Dto\AcquisitionDto.cs" />
@@ -59,10 +61,6 @@
     <ProjectReference Include="..\MyWallet.Domain\MyWallet.Domain.csproj">
       <Project>{b154dd1e-0b79-48c6-a425-296bd31b0ca5}</Project>
       <Name>MyWallet.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MyWallet.Infra.CrossCutting.IoC\MyWallet.Infra.CrossCutting.IoC.csproj">
-      <Project>{2c6b5d85-8e0a-4bcd-a2ea-2ef54d49720f}</Project>
-      <Name>MyWallet.Infra.CrossCutting.IoC</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyWallet.Infra.Data\MyWallet.Infra.Data.csproj">
       <Project>{48584456-019a-4825-8f51-c62221d9432a}</Project>

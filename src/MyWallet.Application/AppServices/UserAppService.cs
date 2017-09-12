@@ -23,26 +23,35 @@ namespace MyWallet.Application.AppServices
 
         public async Task RegisterAsync(UserRegistrationDto userDto)
         {
-            if ((await _userRepository.FindByEmailAsync(userDto.Email)) != null)
-                throw new Exception($"This e-mail '{userDto.Email}' already exists in our system");
+            try
+            {
+                if (await _userRepository.FindByEmailAsync(userDto.Email) != null)
+                    throw new Exception($"This e-mail '{userDto.Email}' already exists in our system");
 
-            var user = _mapper.Map<User>(userDto);
+                var user = _mapper.Map<User>(userDto);
 
-            _userRepository.Add(user);
+                _userRepository.Add(user);
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
 
         }
 
         public UserDto Authenticate(UserLoginDto userDto)
         {
-            var user = _userRepository.Find(u => u.Password.Equals(userDto.Password) && u.Email.Equals(userDto.Email)).Single();
+            var userCriteria = _mapper.Map<User>(userDto);
+            var user = _userRepository.Find(u => u.Password.Equals(userCriteria.Password) && u.Email.Equals(userCriteria.Email)).FirstOrDefault();
             if (user == null) throw new InvalidCredentialException("e-mail/Password are wrong.");
 
             return _mapper.Map<UserDto>(user);
         }
 
-        public async Task<UserDto> GetUserByTokenIdAsync(string token, Guid id)
+        public async Task<UserDto> GetUserByTokenAsync(string token)
         {
-            var user = await _userRepository.FindByTokenIdAsync(token, id);
+            var user = await _userRepository.FindByTokenAsync(token);
 
             return _mapper.Map<UserDto>(user);
         }

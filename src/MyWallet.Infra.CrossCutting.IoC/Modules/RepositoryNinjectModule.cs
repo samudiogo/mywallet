@@ -11,6 +11,7 @@ namespace MyWallet.Infra.CrossCutting.IoC.Modules
         {
             Bind(typeof(IRepository<>)).To(typeof(Repository<>));
             Bind<IWalletRepository>().To<WalletRepository>();
+            Bind<IUserRepository>().To<UserRepository>();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace MyWallet.Application.Contracts
         Task RegisterAsync(UserRegistrationDto userDto);
         UserDto Authenticate(UserLoginDto userDto);
 
-        Task<UserDto> GetUserByTokenIdAsync(string token, Guid id);
+        Task<UserDto> GetUserByTokenAsync(string token);
 
         Task<UserDto> GetUserByEmailAsync(string email);
     }

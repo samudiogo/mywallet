@@ -1,22 +1,27 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
+using MyWallet.Application.Contracts;
 
 namespace MyWallet.WebApi.Controllers
 {
+    [RoutePrefix("api/wallet")]
     public class WalletController : ApiController
     {
+
+        private readonly IWalletAppService _walletAppService;
+
+        public WalletController(IWalletAppService walletAppService)
+        {
+            _walletAppService = walletAppService;
+        }
+
         // GET: api/Wallet
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Wallet/5
+        // GET: api/Wallet/5 
         public string Get(int id)
         {
             return "value";

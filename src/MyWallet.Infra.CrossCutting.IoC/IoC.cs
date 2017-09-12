@@ -16,6 +16,6 @@ namespace MyWallet.Infra.CrossCutting.IoC
             ServiceLocator.SetLocatorProvider(() => new NinjectServiceLocator(Kernel));
         }
 
-        private static StandardKernel GetNinjectModules() => new StandardKernel(new RepositoryNinjectModule());
+        private static StandardKernel GetNinjectModules() => new StandardKernel(new RepositoryNinjectModule(),new ApplicationNinjectModule());
     }
 }
