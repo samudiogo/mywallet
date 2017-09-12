@@ -1,4 +1,8 @@
-﻿using Ninject.Modules;
+﻿using AutoMapper;
+using MyWallet.Application.AppServices;
+using MyWallet.Application.Contracts;
+using Ninject;
+using Ninject.Modules;
 
 namespace MyWallet.Infra.CrossCutting.IoC.Modules
 {
@@ -6,7 +10,18 @@ namespace MyWallet.Infra.CrossCutting.IoC.Modules
     {
         public override void Load()
         {
-            //TODO: bind contracts and implementations here 
+            Bind<IMapper>().ToMethod(ctx =>
+            {
+                var cfg = new MapperConfiguration(mapconfig =>
+                {
+                    mapconfig.AddProfile<Application.AutoMapper.AutoMapperProfile>();
+                    mapconfig.ConstructServicesUsing(t=> Kernel?.Get(t));
+                });
+                return cfg.CreateMapper();
+            }).InSingletonScope();
+
+            Bind<IUserAppService>().To<UserAppService>();
+            
         }
     }
 }
