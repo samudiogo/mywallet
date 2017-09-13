@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 using MyWallet.Application.Contracts;
-
+using MyWallet.Application.Dto;
+using static MyWallet.WebApi.Utils.ResponseMessageUtils;
 namespace MyWallet.WebApi.Controllers
 {
-    [RoutePrefix("api/wallet")]
+    [RoutePrefix("api/wallets")]
     public class WalletController : ApiController
     {
 
@@ -16,30 +19,34 @@ namespace MyWallet.WebApi.Controllers
         }
 
         // GET: api/Wallet
-        public IEnumerable<string> Get()
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IHttpActionResult> Get(Guid id)
         {
-            return new string[] { "value1", "value2" };
+            var result = await _walletAppService.GetWalletById(id);
+            if (result == null)
+                return ResponseMessage(CustomMessage(Request, HttpStatusCode.NotFound, "Wallet not found"));
+
+            return Ok(result);
         }
 
-        // GET: api/Wallet/5 
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST: api/Wallet
-        public void Post([FromBody]string value)
+        [HttpPost]
+        [Route("")]
+        public async Task<IHttpActionResult> RegisterWallet([FromBody]WalletRegistrationDto walletDto)
         {
+            try
+            {
+                if (!ModelState.IsValid) return ResponseMessage(CustomMessage(Request, HttpStatusCode.Forbidden, "Invalid information"));
+                var result = await _walletAppService.CreateWallet(walletDto);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return ResponseMessage(CustomMessage(Request, HttpStatusCode.BadRequest, e.Message));
+            }
         }
 
-        // PUT: api/Wallet/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Wallet/5
-        public void Delete(int id)
-        {
-        }
     }
 }

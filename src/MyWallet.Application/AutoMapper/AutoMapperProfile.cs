@@ -15,9 +15,14 @@ namespace MyWallet.Application.AutoMapper
                 .ConstructUsing(src => new User(src.Name, src.Email, src.Password))
                 .ForMember(u => u.Password, opt => opt.Ignore()); ;
             CreateMap<UserLoginDto, User>()
-                .ConstructUsing(src => new User(src.Email, src.Password)).ForMember(u => u.Password, opt => opt.Ignore());
+                .ConstructUsing(src => new User(src.Email, src.Password))
+                .ForMember(u => u.Password, opt => opt.Ignore());
             CreateMap<UserDto, User>();
 
+
+            //wallet
+            CreateMap<Wallet, WalletDto>().ReverseMap();
+            
         }
     }
 }

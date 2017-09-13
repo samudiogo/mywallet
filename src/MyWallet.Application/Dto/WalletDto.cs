@@ -14,6 +14,6 @@ namespace MyWallet.Application.Dto
 
     public class WalletRegistrationDto
     {
-        public Guid OwnerId { get; set; }
+        public string UserEmail { get; set; }
     }
 }

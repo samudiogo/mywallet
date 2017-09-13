@@ -20,7 +20,7 @@ namespace MyWallet.Infra.Data.Repository
 
         public async Task<User> FindByEmailAsync(string email)
         {
-            return await Context.Users.FirstOrDefaultAsync(u => u.Token.Equals(email));
+            return await Context.Users.FirstOrDefaultAsync(u => u.Email.Equals(email));
         }
     }
 }

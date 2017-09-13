@@ -21,7 +21,8 @@ namespace MyWallet.Infra.CrossCutting.IoC.Modules
             }).InSingletonScope();
 
             Bind<IUserAppService>().To<UserAppService>();
-            
+            Bind<IWalletAppService>().To<WalletAppService>();
+
         }
     }
 }

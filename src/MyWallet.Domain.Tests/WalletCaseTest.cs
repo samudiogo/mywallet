@@ -18,7 +18,7 @@ namespace MyWallet.Domain.Tests
 
             //assert:
             Assert.IsNotNull(sut.Owner);
-            Assert.Equals(sut.Owner.Name, "Samuel");
+            Assert.AreEqual(sut.Owner.Name, "Samuel");
         }
 
         [TestMethod]
