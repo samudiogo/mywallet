@@ -14,40 +14,28 @@ namespace MyWallet.Infra.Data.Migrations
                         Id = c.Guid(nullable: false),
                         Description = c.String(nullable: false, maxLength: 100),
                         Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Card_Id = c.Guid(),
+                        CardNumber = c.String(nullable: false, maxLength: 20),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Cards", t => t.Card_Id)
-                .Index(t => t.Card_Id);
+                .ForeignKey("dbo.Cards", t => t.CardNumber, cascadeDelete: true)
+                .Index(t => t.CardNumber);
             
             CreateTable(
                 "dbo.Cards",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
-                        Number = c.String(nullable: false, maxLength: 20),
+                        CardNumber = c.String(nullable: false, maxLength: 20),
+                        NameInCard = c.String(),
+                        Cvv = c.String(nullable: false, maxLength: 4),
                         DueDate = c.DateTime(nullable: false),
                         ExpirationDate = c.DateTime(nullable: false),
-                        Cvv = c.String(nullable: false, maxLength: 4),
                         Limit = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        IsReleasingCreditAccepted = c.Boolean(nullable: false),
-                        Wallet_Id = c.Guid(),
+                        IsReleasedCreditAcepted = c.Boolean(nullable: false),
+                        WalletId = c.Guid(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Wallets", t => t.Wallet_Id)
-                .Index(t => t.Wallet_Id);
-            
-            CreateTable(
-                "dbo.Users",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false, identity: true),
-                        Name = c.String(nullable: false),
-                        Email = c.String(nullable: false),
-                        Password = c.String(nullable: false),
-                        Token = c.String(nullable: true),
-                    })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.CardNumber)
+                .ForeignKey("dbo.Wallets", t => t.WalletId, cascadeDelete: true)
+                .Index(t => t.WalletId);
             
             CreateTable(
                 "dbo.Wallets",
@@ -61,18 +49,30 @@ namespace MyWallet.Infra.Data.Migrations
                 .ForeignKey("dbo.Users", t => t.Owner_Id, cascadeDelete: true)
                 .Index(t => t.Owner_Id);
             
+            CreateTable(
+                "dbo.Users",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false, identity: true),
+                        Name = c.String(nullable: false),
+                        Email = c.String(nullable: false),
+                        Password = c.String(nullable: false),
+                        Token = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.Acquisitions", "CardNumber", "dbo.Cards");
+            DropForeignKey("dbo.Cards", "WalletId", "dbo.Wallets");
             DropForeignKey("dbo.Wallets", "Owner_Id", "dbo.Users");
-            DropForeignKey("dbo.Cards", "Wallet_Id", "dbo.Wallets");
-            DropForeignKey("dbo.Acquisitions", "Card_Id", "dbo.Cards");
             DropIndex("dbo.Wallets", new[] { "Owner_Id" });
-            DropIndex("dbo.Cards", new[] { "Wallet_Id" });
-            DropIndex("dbo.Acquisitions", new[] { "Card_Id" });
-            DropTable("dbo.Wallets");
+            DropIndex("dbo.Cards", new[] { "WalletId" });
+            DropIndex("dbo.Acquisitions", new[] { "CardNumber" });
             DropTable("dbo.Users");
+            DropTable("dbo.Wallets");
             DropTable("dbo.Cards");
             DropTable("dbo.Acquisitions");
         }

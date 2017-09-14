@@ -13,7 +13,7 @@ namespace MyWallet.Infra.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201709120433465_Init"; }
+            get { return "201709140306269_Init"; }
         }
         
         string IMigrationMetadata.Source

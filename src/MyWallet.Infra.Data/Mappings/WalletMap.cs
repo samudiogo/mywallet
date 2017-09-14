@@ -1,13 +1,15 @@
 ﻿using System.Data.Entity.ModelConfiguration;
 
-using MyWallet.Domain.Models;
+using MyWallet.Infra.Data.DataModels;
 
 namespace MyWallet.Infra.Data.Mappings
 {
-    public class WalletMap: EntityTypeConfiguration<Wallet>
+    public class WalletMap: EntityTypeConfiguration<WalletDataModel>
     {
         public WalletMap()
         {
+            ToTable("Wallets");
+
             HasKey(w => w.Id);
             Property(w => w.Id);
 

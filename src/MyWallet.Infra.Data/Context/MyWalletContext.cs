@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.IO;
 using MyWallet.Domain.Models;
+using MyWallet.Infra.Data.DataModels;
 using MyWallet.Infra.Data.Mappings;
 
 namespace MyWallet.Infra.Data.Context
@@ -8,10 +9,10 @@ namespace MyWallet.Infra.Data.Context
     public class MyWalletContext : DbContext
     {
         public MyWalletContext() : base(nameof(MyWalletContext)) { }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Wallet> Wallets { get; set; }
-        public DbSet<Card> Cards { get; set; }
-        public DbSet<Acquisition> Acquisitions { get; set; }
+        public DbSet<UserDataModel> Users { get; set; }
+        public DbSet<WalletDataModel> Wallets { get; set; }
+        public DbSet<CardDataModel> Cards { get; set; }
+        public DbSet<AcquisitionDataModel> Acquisitions { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

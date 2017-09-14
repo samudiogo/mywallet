@@ -53,17 +53,17 @@
     <Compile Include="Contracts\IRepository.cs" />
     <Compile Include="Contracts\IUserRepository.cs" />
     <Compile Include="Contracts\IWalletRepository.cs" />
+    <Compile Include="DataModels\AcquisitionDataModel.cs" />
+    <Compile Include="DataModels\CardDataModel.cs" />
+    <Compile Include="DataModels\UserDataModel.cs" />
+    <Compile Include="DataModels\WalletDataModel.cs" />
     <Compile Include="Mappings\AcquisitionMap.cs" />
     <Compile Include="Mappings\CardMap.cs" />
     <Compile Include="Mappings\UserMap.cs" />
     <Compile Include="Mappings\WalletMap.cs" />
-    <Compile Include="Migrations\201709120433465_Init.cs" />
-    <Compile Include="Migrations\201709120433465_Init.Designer.cs">
-      <DependentUpon>201709120433465_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709120458085_UserTokenOptional.cs" />
-    <Compile Include="Migrations\201709120458085_UserTokenOptional.Designer.cs">
-      <DependentUpon>201709120458085_UserTokenOptional.cs</DependentUpon>
+    <Compile Include="Migrations\201709140306269_Init.cs" />
+    <Compile Include="Migrations\201709140306269_Init.Designer.cs">
+      <DependentUpon>201709140306269_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,11 +84,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709120433465_Init.resx">
-      <DependentUpon>201709120433465_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709120458085_UserTokenOptional.resx">
-      <DependentUpon>201709120458085_UserTokenOptional.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709140306269_Init.resx">
+      <DependentUpon>201709140306269_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
