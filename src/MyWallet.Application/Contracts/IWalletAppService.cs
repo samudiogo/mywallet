@@ -8,5 +8,8 @@ namespace MyWallet.Application.Contracts
     {
         Task<WalletDto> GetWalletById(Guid id);
         Task<WalletDto> CreateWallet(WalletSaveOrUpdateDto wallet);
+
+        Task<WalletDto> AssociateCreditCardToWallet(WalletDto walletDto);
+        AcquisitionDto RegisterPurchase(AcquisitionSaveOrUpdateDto acquisitionSaveOrUpdateDto);
     }
 }

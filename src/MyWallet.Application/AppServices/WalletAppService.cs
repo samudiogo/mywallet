@@ -5,6 +5,8 @@ using AutoMapper;
 using MyWallet.Application.Contracts;
 using MyWallet.Application.Dto;
 using MyWallet.Domain.Models;
+using MyWallet.Domain.Services;
+using MyWallet.Domain.Services.Contracts;
 using MyWallet.Infra.Data.Contracts;
 using MyWallet.Infra.Data.DataModels;
 
@@ -14,13 +16,15 @@ namespace MyWallet.Application.AppServices
     {
         private readonly IWalletRepository _walletRepository;
         private readonly IUserAppService _userAppService;
+        private readonly IAcquisitionRepository _acquisitionRepository;
         private readonly IMapper _mapper;
 
-        public WalletAppService(IWalletRepository walletRepository, IMapper mapper, IUserAppService userAppService)
+        public WalletAppService(IWalletRepository walletRepository, IMapper mapper, IUserAppService userAppService, IAcquisitionRepository acquisitionRepository)
         {
             _walletRepository = walletRepository;
             _mapper = mapper;
             _userAppService = userAppService;
+            _acquisitionRepository = acquisitionRepository;
         }
 
         public async Task<WalletDto> GetWalletById(Guid id)
@@ -43,5 +47,41 @@ namespace MyWallet.Application.AppServices
 
             return _mapper.Map<WalletDto>(wallet);
         }
+
+        public async Task<WalletDto> AssociateCreditCardToWallet(WalletDto walletDto)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public AcquisitionDto RegisterPurchase(AcquisitionSaveOrUpdateDto acquisitionSaveOrUpdateDto)
+        {
+            var walletDbModel = _walletRepository.GetById(acquisitionSaveOrUpdateDto.WalletId);
+
+            if (walletDbModel == null) throw new Exception("wallet not found.");
+
+            if (!walletDbModel.Cards.Any()) throw new Exception("wallet without a card.");
+
+            var walletDomain = _mapper.Map<Wallet>(walletDbModel);
+
+
+
+            var cardMonitor = new CardMonitor();
+
+            var purchaseService = new Purchase(ref walletDomain, cardMonitor);
+
+            var acquisitonDomain = _mapper.Map<Acquisition>(acquisitionSaveOrUpdateDto);
+
+            if (!purchaseService.Buy(acquisitonDomain))
+                throw new Exception("error while processing the payment");
+
+            _walletRepository.Update(_mapper.Map<WalletDataModel>(purchaseService.Wallet));
+
+            var purchaseDb = _acquisitionRepository.GetById(acquisitonDomain.Id);
+
+            return _mapper.Map<AcquisitionDto>(purchaseDb);
+
+        }
     }
 }
+

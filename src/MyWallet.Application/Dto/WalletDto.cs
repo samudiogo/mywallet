@@ -15,5 +15,6 @@ namespace MyWallet.Application.Dto
     public class WalletSaveOrUpdateDto
     {
         public string UserEmail { get; set; }
+        public decimal RealLimit { get; set; }
     }
 }

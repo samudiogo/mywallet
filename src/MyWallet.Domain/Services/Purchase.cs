@@ -16,7 +16,7 @@ namespace MyWallet.Domain.Services
 
         public Wallet Wallet { get; }
 
-        public void Buy(Acquisition acquisition)
+        public bool Buy(Acquisition acquisition)
         {
             //check if amount is over the realimit
             if (acquisition.Amount > Wallet.RealLimit || acquisition.Amount > Wallet.GetMaximmumLimit())
@@ -43,6 +43,7 @@ namespace MyWallet.Domain.Services
                 card.RegisterPurchase(partialPurchase);
                 DecreaseLimit(card, partialPurchase.Amount);
             }
+            return true;
         }
 
         private void DecreaseLimit(Card card, decimal amount)
