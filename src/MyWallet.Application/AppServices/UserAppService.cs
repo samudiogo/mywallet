@@ -7,6 +7,7 @@ using MyWallet.Application.Contracts;
 using MyWallet.Application.Dto;
 using MyWallet.Domain.Models;
 using MyWallet.Infra.Data.Contracts;
+using MyWallet.Infra.Data.DataModels;
 
 namespace MyWallet.Application.AppServices
 {
@@ -28,7 +29,7 @@ namespace MyWallet.Application.AppServices
                 if (await _userRepository.FindByEmailAsync(userDto.Email) != null)
                     throw new Exception($"This e-mail '{userDto.Email}' already exists in our system");
 
-                var user = _mapper.Map<User>(userDto);
+                var user = _mapper.Map<UserDataModel>(userDto);
 
                 _userRepository.Add(user);
             }

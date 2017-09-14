@@ -43,4 +43,3 @@ namespace MyWallet.Application.AppServices
         }
     }
 }
-}

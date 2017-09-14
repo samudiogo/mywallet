@@ -43,10 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppServices\CardAppService.cs" />
     <Compile Include="AppServices\UserAppService.cs" />
     <Compile Include="AppServices\WalletAppService.cs" />
     <Compile Include="AutoMapper\AutoMapperConfig.cs" />
     <Compile Include="AutoMapper\AutoMapperProfile.cs" />
+    <Compile Include="Contracts\ICardAppService.cs" />
     <Compile Include="Contracts\IUserAppService.cs" />
     <Compile Include="Contracts\IWalletAppService.cs" />
     <Compile Include="Dto\AcquisitionDto.cs" />
