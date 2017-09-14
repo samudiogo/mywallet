@@ -1,8 +1,8 @@
-﻿using MyWallet.Domain.Models;
+﻿using MyWallet.Infra.Data.DataModels;
 
 namespace MyWallet.Infra.Data.Contracts
 {
-    public interface IWalletRepository : IRepository<Wallet>
+    public interface IWalletRepository : IRepository<WalletDataModel>
     {
 
     }

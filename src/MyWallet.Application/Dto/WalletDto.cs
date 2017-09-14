@@ -12,7 +12,7 @@ namespace MyWallet.Application.Dto
 
     }
 
-    public class WalletRegistrationDto
+    public class WalletSaveOrUpdateDto
     {
         public string UserEmail { get; set; }
     }

@@ -6,7 +6,7 @@ namespace MyWallet.Application.Contracts
 {
     public interface IUserAppService
     {
-        Task RegisterAsync(UserRegistrationDto userDto);
+        Task RegisterAsync(UserSaveOrUpdateDto userDto);
         UserDto Authenticate(UserLoginDto userDto);
 
         Task<UserDto> GetUserByTokenAsync(string token);

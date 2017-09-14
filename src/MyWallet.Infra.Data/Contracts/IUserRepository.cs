@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using MyWallet.Domain.Models;
+﻿using System.Threading.Tasks;
 using MyWallet.Infra.Data.DataModels;
 
 namespace MyWallet.Infra.Data.Contracts

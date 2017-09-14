@@ -7,6 +7,6 @@ namespace MyWallet.Application.Contracts
     public interface IWalletAppService
     {
         Task<WalletDto> GetWalletById(Guid id);
-        Task<WalletDto> CreateWallet(WalletRegistrationDto wallet);
+        Task<WalletDto> CreateWallet(WalletSaveOrUpdateDto wallet);
     }
 }

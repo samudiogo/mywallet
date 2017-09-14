@@ -7,7 +7,11 @@ namespace MyWallet.Application.Contracts
     {
         Task<CardDto> RegisterAsync(CardSaveOrUpdateDto cardDto);
 
-        Task<CardDto> UpdateAsync(CardDto cardDto);
+        Task<CardDto> UpdateAsync(CardSaveOrUpdateDto cardDto);
+
+        Task<CardDto> GetCreditCardByNumber(string creditCardNumber);
+
+        Task RemoveCreditCard(string creditCardNumber);
 
     }
 }

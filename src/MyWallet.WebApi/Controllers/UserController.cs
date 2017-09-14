@@ -22,7 +22,7 @@ namespace MyWallet.WebApi.Controllers
 
         [HttpPost]
         [Route("signUp")]
-        public async Task<IHttpActionResult> Register([FromBody]UserRegistrationDto user)
+        public async Task<IHttpActionResult> Register([FromBody]UserSaveOrUpdateDto user)
         {
             if (!ModelState.IsValid)
                 return ResponseMessage(CustomMessage(Request, HttpStatusCode.Forbidden, "Invalid information"));

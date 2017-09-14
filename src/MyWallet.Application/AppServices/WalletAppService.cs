@@ -6,6 +6,7 @@ using MyWallet.Application.Contracts;
 using MyWallet.Application.Dto;
 using MyWallet.Domain.Models;
 using MyWallet.Infra.Data.Contracts;
+using MyWallet.Infra.Data.DataModels;
 
 namespace MyWallet.Application.AppServices
 {
@@ -30,14 +31,15 @@ namespace MyWallet.Application.AppServices
             return _mapper.Map<WalletDto>(result);
         }
 
-        public async Task<WalletDto> CreateWallet(WalletRegistrationDto walletDto)
+        public async Task<WalletDto> CreateWallet(WalletSaveOrUpdateDto walletDto)
         {
 
             var userDto = await _userAppService.GetUserByEmailAsync(walletDto.UserEmail);
             var walletId = Guid.NewGuid();
             if (userDto == null) throw new Exception("user not found.");
             var wallet = new Wallet(walletId, _mapper.Map<User>(userDto));
-            _walletRepository.Add(wallet);
+
+            _walletRepository.Add(_mapper.Map<WalletDataModel>(wallet));
 
             return _mapper.Map<WalletDto>(wallet);
         }

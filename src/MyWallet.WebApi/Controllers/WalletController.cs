@@ -34,7 +34,7 @@ namespace MyWallet.WebApi.Controllers
         // POST: api/Wallet
         [HttpPost]
         [Route("")]
-        public async Task<IHttpActionResult> RegisterWallet([FromBody]WalletRegistrationDto walletDto)
+        public async Task<IHttpActionResult> RegisterWallet([FromBody]WalletSaveOrUpdateDto walletDto)
         {
             try
             {

@@ -22,16 +22,17 @@ namespace MyWallet.Application.AppServices
             _userRepository = userRepository;
         }
 
-        public async Task RegisterAsync(UserRegistrationDto userDto)
+        public async Task RegisterAsync(UserSaveOrUpdateDto userDto)
         {
             try
             {
                 if (await _userRepository.FindByEmailAsync(userDto.Email) != null)
                     throw new Exception($"This e-mail '{userDto.Email}' already exists in our system");
 
-                var user = _mapper.Map<UserDataModel>(userDto);
+                var userDomain = _mapper.Map<User>(userDto);
 
-                _userRepository.Add(user);
+                _userRepository.Add(_mapper.Map<UserDataModel>(userDomain));
+
             }
             catch (Exception e)
             {

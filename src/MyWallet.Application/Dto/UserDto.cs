@@ -10,7 +10,7 @@ namespace MyWallet.Application.Dto
 
     }
 
-    public class UserRegistrationDto
+    public class UserSaveOrUpdateDto
     {
         public string Name { get; set; }
         public string Email { get; set; }

@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using MyWallet.Application.Contracts;
 using MyWallet.Application.Dto;
+using MyWallet.WebApi.Models;
 using static MyWallet.WebApi.Utils.ResponseMessageUtils;
 namespace MyWallet.WebApi.Controllers
 {
@@ -18,13 +18,26 @@ namespace MyWallet.WebApi.Controllers
             _cardAppService = cardAppService;
         }
 
-
+        [HttpGet]
+        [Route("{creditCardNumber}")]
         // GET: api/Cards/5
-        public IHttpActionResult Get(Guid id)
+        public IHttpActionResult Get(string creditCardNumber)
         {
-            return Ok();
-        }
+            try
+            {
+                var result = _cardAppService.GetCreditCardByNumber(creditCardNumber);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
 
+                return Content(HttpStatusCode.BadRequest, new ErrorReport
+                {
+                    Category = "RequestError",
+                    ErrorItemCollection = ErrorReport.GetExceptionList((int)HttpStatusCode.BadRequest, e)
+                });
+            }
+        }
         // POST: api/Cards
         [HttpPost]
         public async Task<IHttpActionResult> Post([FromBody]CardSaveOrUpdateDto cardRegistrationDto)
@@ -36,9 +49,9 @@ namespace MyWallet.WebApi.Controllers
             return Ok(result);
         }
 
-        // PUT: api/Cards/5
+        // PUT: api/Cards
         [HttpPut]
-        public async Task<IHttpActionResult> Put([FromBody]CardDto cardDto)
+        public async Task<IHttpActionResult> Put([FromBody]CardSaveOrUpdateDto cardDto)
         {
             if (!ModelState.IsValid) return ResponseMessage(CustomMessage(Request, HttpStatusCode.BadRequest, "Invalid card information"));
 
@@ -47,9 +60,25 @@ namespace MyWallet.WebApi.Controllers
             return Ok(result);
         }
 
-        // DELETE: api/Cards/5
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("{creditCardNumber}")]
+        // DELETE: api/Cards/55555555555555555
+        public async Task<IHttpActionResult> Delete(string creditCardNumber)
         {
+            try
+            {
+                await _cardAppService.RemoveCreditCard(creditCardNumber);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return Content(HttpStatusCode.BadRequest, new ErrorReport
+                {
+                    Category = "RequestError",
+                    ErrorItemCollection = ErrorReport.GetExceptionList((int)HttpStatusCode.BadRequest, e)
+                });
+            }
         }
     }
 }
